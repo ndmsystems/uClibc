@@ -78,8 +78,6 @@ __FBSDID("$FreeBSD: /repoman/r/ncvs/src/usr.bin/unifdef/unifdef.c,v 1.20 2005/05
 #define errx(exit_code, fmt, args...) ({ warnx(fmt, ## args); exit(exit_code); })
 #define err(exit_code, fmt, args...)  errx(exit_code, fmt ": %s", ## args, strerror(errno))
 
-size_t strlcpy(char *dst, const char *src, size_t siz);
-
 /* types of input lines: */
 typedef enum {
 	LT_TRUEI,		/* a true #if with ignore flag */
