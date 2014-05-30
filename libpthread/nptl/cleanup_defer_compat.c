@@ -22,7 +22,7 @@
 
 void
 attribute_protected
-_pthread_cleanup_push_defer (
+__pthread_cleanup_push_defer (
      struct _pthread_cleanup_buffer *buffer,
      void (*routine) (void *),
      void *arg)
@@ -57,12 +57,12 @@ _pthread_cleanup_push_defer (
 
   THREAD_SETMEM (self, cleanup, buffer);
 }
-strong_alias (_pthread_cleanup_push_defer, __pthread_cleanup_push_defer)
+strong_alias (__pthread_cleanup_push_defer, _pthread_cleanup_push_defer)
 
 
 void
 attribute_protected
-_pthread_cleanup_pop_restore (
+__pthread_cleanup_pop_restore (
      struct _pthread_cleanup_buffer *buffer,
      int execute)
 {
@@ -97,4 +97,4 @@ _pthread_cleanup_pop_restore (
   if (execute)
     buffer->__routine (buffer->__arg);
 }
-strong_alias (_pthread_cleanup_pop_restore, __pthread_cleanup_pop_restore)
+strong_alias (__pthread_cleanup_pop_restore, _pthread_cleanup_pop_restore)
