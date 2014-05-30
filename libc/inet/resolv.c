@@ -3432,6 +3432,7 @@ static void res_sync_func(void)
 	 */
 }
 
+/* has to be called under __resolv_lock */
 static int
 __res_vinit(res_state rp, int preinit)
 {
@@ -3440,7 +3441,6 @@ __res_vinit(res_state rp, int preinit)
 	int m = 0;
 #endif
 
-	__UCLIBC_MUTEX_LOCK(__resolv_lock);
 	__close_nameservers();
 	__open_nameservers();
 
@@ -3532,7 +3532,6 @@ __res_vinit(res_state rp, int preinit)
 
 	rp->options |= RES_INIT;
 
-	__UCLIBC_MUTEX_UNLOCK(__resolv_lock);
 	return 0;
 }
 
@@ -3582,10 +3581,10 @@ res_init(void)
 	if (!_res.id)
 		_res.id = res_randomid();
 
-	__UCLIBC_MUTEX_UNLOCK(__resolv_lock);
-
 	__res_vinit(&_res, 1);
 	__res_sync = res_sync_func;
+
+	__UCLIBC_MUTEX_UNLOCK(__resolv_lock);
 
 	return 0;
 }
@@ -3687,7 +3686,11 @@ struct __res_state *__resp = &_res;
 int
 res_ninit(res_state statp)
 {
-	return __res_vinit(statp, 0);
+	int ret;
+	__UCLIBC_MUTEX_LOCK(__resolv_lock);
+	ret = __res_vinit(statp, 0);
+	__UCLIBC_MUTEX_UNLOCK(__resolv_lock);
+	return ret;
 }
 
 #endif /* L_res_init */
