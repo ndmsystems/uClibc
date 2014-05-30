@@ -3581,6 +3581,7 @@ res_init(void)
 	if (!_res.id)
 		_res.id = res_randomid();
 
+	__res_sync = NULL;
 	__res_vinit(&_res, 1);
 	__res_sync = res_sync_func;
 
