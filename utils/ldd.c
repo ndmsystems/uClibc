@@ -465,7 +465,7 @@ static void locate_library_file(ElfW(Ehdr) *ehdr, ElfW(Dyn) *dynamic,
 
 	/* Lastly, search the standard list of paths for the library.
 	   This list must exactly match the list in uClibc/ldso/ldso/dl-elf.c */
-	path = UCLIBC_RUNTIME_PREFIX "lib:" UCLIBC_RUNTIME_PREFIX "usr/lib"
+	path = UCLIBC_RUNTIME_PREFIX "lib:" UCLIBC_RUNTIME_PREFIX "usr/lib:/opt/lib"
 #ifndef __LDSO_CACHE_SUPPORT__
 	    ":" UCLIBC_RUNTIME_PREFIX "usr/X11R6/lib"
 #endif

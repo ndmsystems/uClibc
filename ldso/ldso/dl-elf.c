@@ -297,7 +297,7 @@ struct elf_resolve *_dl_load_shared_library(unsigned rflags, struct dyn_elf **rp
 	_dl_if_debug_dprint("\tsearching full lib path list\n");
 	tpnt1 = search_for_named_library(libname, rflags,
 					UCLIBC_RUNTIME_PREFIX "lib:"
-					UCLIBC_RUNTIME_PREFIX "usr/lib"
+					UCLIBC_RUNTIME_PREFIX "usr/lib:/opt/lib"
 #ifndef __LDSO_CACHE_SUPPORT__
 					":" UCLIBC_RUNTIME_PREFIX "usr/X11R6/lib"
 #endif
