@@ -374,6 +374,16 @@ extern int pthread_mutexattr_getpshared (__const pthread_mutexattr_t *
 extern int pthread_mutexattr_setpshared (pthread_mutexattr_t *__attr,
 					 int __pshared) __THROW;
 
+#ifdef __USE_XOPEN2K
+/* Get the clock selected for the conditon variable attribute ATTR.  */
+extern int pthread_condattr_getclock (const pthread_condattr_t *attr,
+                    clockid_t *clock_id) __THROW;
+
+/* Set the clock selected for the conditon variable attribute ATTR.  */
+extern int pthread_condattr_setclock (pthread_condattr_t *attr,
+                    clockid_t clock_id) __THROW;
+#endif
+
 #ifdef __USE_UNIX98
 /* Set the mutex kind attribute in *ATTR to KIND (either PTHREAD_MUTEX_NORMAL,
    PTHREAD_MUTEX_RECURSIVE, PTHREAD_MUTEX_ERRORCHECK, or
