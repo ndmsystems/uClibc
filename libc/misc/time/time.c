@@ -1834,6 +1834,26 @@ static char *read_TZ_file(char *buf)
 		r = read(fd, buf, TZ_BUFLEN);
 		if (r < 0)
 			goto ERROR;
+#if 1		/* First check and read if TZif2 format */
+		if (r == TZ_BUFLEN && !strncmp(buf, "TZif2", 5) && lseek(fd, -TZ_BUFLEN, SEEK_END) > 0)
+		{
+			r = read(fd, buf, TZ_BUFLEN);
+			if (r <= 0 || buf[--r] != '\n')
+				goto ERROR;
+			buf[r] = 0;
+			while (r != 0) {
+				if (buf[--r] == '\n') {
+					p = buf + r + 1;
+#ifndef __UCLIBC_HAS_TZ_FILE_READ_MANY__
+					TZ_file_read = 1;
+#endif
+					break;
+				}
+			}
+			close(fd);
+			return p;
+		}
+#endif										
 		p = buf + r;
 #endif
 		if ((p > buf) && (p[-1] == '\n')) { /* Must end with newline */
